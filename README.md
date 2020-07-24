@@ -1,4 +1,4 @@
-sass-unitconverter (v.2.2)
+sass-unitconverter (v.2.2.0)
 ==============
 
 **Convert Anything** (almost)
