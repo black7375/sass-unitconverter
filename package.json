@@ -9,6 +9,9 @@
     "type": "git",
     "url": "git+https://github.com/black7375/sass-unitconverter.git"
   },
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com/"
+  },
   "keywords": [
     "SCSS",
     "Unit",
@@ -18,7 +21,7 @@
   "author": "black7375 <alstjr7375@daum.net>",
   "license": "ISC",
   "bugs": {
-  "url": "https://github.com/black7375/sass-unitconverter/issues"
+    "url": "https://github.com/black7375/sass-unitconverter/issues"
   },
   "homepage": "https://github.com/black7375/sass-unitconverter#readme"
 }
