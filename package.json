@@ -1,5 +1,5 @@
 {
-  "name": "@black7375/sass-unitconverter",
+  "name": "sass-unitconverter",
   "version": "2.2.0",
   "description": "Simple SCSS functions for unitconversion",
   "scripts": {
@@ -8,9 +8,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/black7375/sass-unitconverter.git"
-  },
-  "publishConfig": {
-    "registry":"https://npm.pkg.github.com/black7375"
   },
   "keywords": [
     "SCSS",
