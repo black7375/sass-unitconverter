@@ -11,9 +11,17 @@ deg, rad, grad, turn, dpi, dpcm, dppx, s, ms, hz, khz, number,
 ratio 
 ````
 
-**NPM**
-````
+
+**Install**
+````shell
+## Yarn
+yarn add sass-unitconverter
+
+## NPM
 npm install unitconversion
+
+## Github Repository
+npm install @black7375/sass-unitconverter
 ````
 
 
