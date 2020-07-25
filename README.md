@@ -1,4 +1,4 @@
-sass-unitconverter (v.2.2.0)
+sass-unitconverter
 ==============
 
 **Convert Anything** (almost)
@@ -18,7 +18,7 @@ ratio
 yarn add sass-unitconverter
 
 ## NPM
-npm install unitconversion
+npm install sass-unitconverter
 
 ## Github Repository
 npm install @black7375/sass-unitconverter
