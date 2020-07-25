@@ -1,6 +1,6 @@
 {
   "name": "@black7375/sass-unitconverter",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Simple SCSS functions for unitconversion",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
