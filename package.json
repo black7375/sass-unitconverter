@@ -18,7 +18,10 @@
     "Conversion",
     "Unitconversion"
   ],
-  "author": "black7375 <alstjr7375@daum.net>",
+  "contributors": [
+    "black7375 <alstjr7375@daum.net>",
+    "Jakob E <mail.eriksen@gmail.com>"
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/black7375/sass-unitconverter/issues"
