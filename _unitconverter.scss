@@ -31,11 +31,6 @@
 //   grad(input);              deg, rad, grad, turn, number
 //   turn(input);              deg, rad, grad, turn, number
 //
-//   Resolution
-//   dpi(input);               dpi, dpcm, dppx, number
-//   dpcm(input);              dpi, dpcm, dppx, number
-//   dppx(input);              dpi, dpcm, dppx, number
-//
 //   Time
 //   s(input);                 s, ms, number
 //   ms(input);                s, ms, number
@@ -43,6 +38,11 @@
 //   Frequency
 //   hz(input);                hz, khz, number
 //   khz(input);               hz, khz, number
+//
+//   Resolution
+//   dpi(input);               dpi, dpcm, dppx, number
+//   dpcm(input);              dpi, dpcm, dppx, number
+//   dppx(input);              dpi, dpcm, dppx, number
 //
 //   String
 //   str(input);               anything not null
@@ -109,109 +109,23 @@ $base-font-size: $root-font-size !default;
   );
 }
 
-// == Interface ================================================================
-// Absolute lengths
-@function px($input) { @return to-unit($input, px); }
-@function pt($input) { @return to-unit($input, pt); }
-@function pc($input) { @return to-unit($input, pc); }
-@function mm($input) { @return to-unit($input, mm); }
-@function cm($input) { @return to-unit($input, cm); }
-@function in($input) { @return to-unit($input, in); }
-
-// Angles
-@function  deg($input) { @return to-unit($input,  deg); }
-@function  rad($input) { @return to-unit($input,  rad); }
-@function grad($input) { @return to-unit($input, grad); }
-@function turn($input) { @return to-unit($input, turn); }
-
-// Resolution
-@function  dpi($input) { @return to-unit($input,  dpi); }
-@function dpcm($input) { @return to-unit($input, dpcm); }
-@function dppx($input) { @return to-unit($input, dppx); }
-
-// Time
-@function ms($input) { @return to-unit($input, ms); }
-@function  s($input) { @return to-unit($input,  s); }
-
-// Frequencies
-@function  hz($input) { @return to-unit($input,  hz); }
-@function khz($input) { @return to-unit($input, khz); }
-
-// Relative lengths
-@function em($input...) {
-  $em: to-unit(nth($input,1), em);
-  // Adjust for compounds (visual size)
-  @if length($input) > 1 {
-    @for $i from 2 through length($input){
-      $em: $em / num(em(nth($input,$i)));
-    }
-  }
-  @return $em;
-}
-@function rem($input) { @return to-unit($input, rem); }
-
-// Inconvertible relative lengths – depends on font
-@function ex($input) { @return to-unit($input, ex); }
-@function ch($input) { @return to-unit($input, ch); }
-
-// Viewport
-@function   vw($input) { @return to-unit($input,   vw); }
-@function   vh($input) { @return to-unit($input,   vh); }
-@function vmin($input) { @return to-unit($input, vmin); }
-@function vmax($input) { @return to-unit($input, vmax); }
-
-// Strings and numbers
-// https://css-tricks.com/snippets/sass/strip-unit-function/
-// https://stackoverflow.com/questions/47630616/scss-arithmetic-operation-with-string
-@function str($input) { @return #{$input};  }
-@function num($input) {
-  @if type-of($input) == 'number' and not unitless($input) {
-    @return $input / ($input * 0 + 1);
-  } @else if type-of($input) != 'string' {
-    @error 'Could not convert `#{$input}` - must be `type-of number or a string.`';
-    @return null;
-  }
-
-  $result: 0;
-  $digits: 0;
-  $minus: str-slice($input, 1, 1) == '-';
-  $numbers: ('0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9);
-
-  @for $i from if($minus, 2, 1) through str-length($input) {
-    $character: str-slice($input, $i, $i);
-
-    @if (index(map-keys($numbers), $character) or $character == '.') {
-      @if $character == '.' {
-        $digits: 1;
-      } @else if $digits == 0 {
-        $result: $result * 10 + map-get($numbers, $character);
-      } @else {
-        $digits: $digits * 10;
-        $result: $result + map-get($numbers, $character) / $digits;
-      }
-    }
-  }
-
-  @return if($minus, -$result, $result);;
-}
-@function int($input) {
-  $num: num($input);
-  @return if($num<0, ceil($num), floor($num));
-}
-@function uint($input) { @return abs(int($input)); }
-
-// Aliases
-@function string($input) { @return str($input); }
-@function number($input) { @return num($input); }
-
 
 // == Conversion ===============================================================
 // get unit
+@function get-unit($input) {
+  $type: type-of($input);
+  @if $type == 'number' {
+    $unit: unit($input);
+    @return if($unit == '', 'num', $unit);
+  }
+  @return $type;
+}
 @function one-unit($input) {
-  @if type-of($input) == 'number' {
+  $type: type-of($input);
+  @if $type == 'number' {
     @return ($input / num($input));
   }
-  @if type-of($input) != 'string' {
+  @if $type != 'string' {
     @error 'Value for `unit` should be a number or string.';
   }
 
@@ -324,3 +238,154 @@ $base-font-size: $root-font-size !default;
   @else if $x == round($x) and $y == round($y){ @return #{$x}/#{$y}; }
   @warn 'X and Y must be integers'; @return false;
 }
+
+
+// == Interface - Convert ======================================================
+// Absolute lengths
+@function px($input) { @return to-unit($input, px); }
+@function pt($input) { @return to-unit($input, pt); }
+@function pc($input) { @return to-unit($input, pc); }
+@function mm($input) { @return to-unit($input, mm); }
+@function cm($input) { @return to-unit($input, cm); }
+@function in($input) { @return to-unit($input, in); }
+
+// Relative lengths
+@function em($input...) {
+  $em: to-unit(nth($input,1), em);
+  // Adjust for compounds (visual size)
+  @if length($input) > 1 {
+    @for $i from 2 through length($input){
+      $em: $em / num(em(nth($input,$i)));
+    }
+  }
+  @return $em;
+}
+@function rem($input) { @return to-unit($input, rem); }
+
+// Inconvertible relative lengths – depends on font
+@function ex($input) { @return to-unit($input, ex); }
+@function ch($input) { @return to-unit($input, ch); }
+
+// Relative lengths - Viewport
+@function   vw($input) { @return to-unit($input,   vw); }
+@function   vh($input) { @return to-unit($input,   vh); }
+@function vmin($input) { @return to-unit($input, vmin); }
+@function vmax($input) { @return to-unit($input, vmax); }
+
+// Angles
+@function  deg($input) { @return to-unit($input,  deg); }
+@function  rad($input) { @return to-unit($input,  rad); }
+@function grad($input) { @return to-unit($input, grad); }
+@function turn($input) { @return to-unit($input, turn); }
+
+// Time
+@function ms($input) { @return to-unit($input, ms); }
+@function  s($input) { @return to-unit($input,  s); }
+
+// Frequencies
+@function  hz($input) { @return to-unit($input,  hz); }
+@function khz($input) { @return to-unit($input, khz); }
+
+// Resolution
+@function  dpi($input) { @return to-unit($input,  dpi); }
+@function dpcm($input) { @return to-unit($input, dpcm); }
+@function dppx($input) { @return to-unit($input, dppx); }
+
+// Strings and numbers
+// https://css-tricks.com/snippets/sass/strip-unit-function/
+// https://stackoverflow.com/questions/47630616/scss-arithmetic-operation-with-string
+@function str($input) { @return #{$input};  }
+@function num($input) {
+  @if type-of($input) == 'number' and not unitless($input) {
+    @return $input / ($input * 0 + 1);
+  } @else if type-of($input) != 'string' {
+    @error 'Could not convert `#{$input}` - must be `type-of number or a string.`';
+    @return null;
+  }
+
+  $result: 0;
+  $digits: 0;
+  $minus: str-slice($input, 1, 1) == '-';
+  $numbers: ('0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9);
+
+  @for $i from if($minus, 2, 1) through str-length($input) {
+    $character: str-slice($input, $i, $i);
+
+    @if (index(map-keys($numbers), $character) or $character == '.') {
+      @if $character == '.' {
+        $digits: 1;
+      } @else if $digits == 0 {
+        $result: $result * 10 + map-get($numbers, $character);
+      } @else {
+        $digits: $digits * 10;
+        $result: $result + map-get($numbers, $character) / $digits;
+      }
+    }
+  }
+
+  @return if($minus, -$result, $result);;
+}
+@function int($input) {
+  $num: num($input);
+  @return if($num<0, ceil($num), floor($num));
+}
+@function uint($input) { @return abs(int($input)); }
+
+// Aliases
+@function string($input) { @return str($input); }
+@function number($input) { @return num($input); }
+
+
+// == Interface - Check ========================================================
+// Absolute lengths
+@function is-px($input) { @return get-unit($input) == 'px'; }
+@function is-pt($input) { @return get-unit($input) == 'pt'; }
+@function is-pc($input) { @return get-unit($input) == 'pc'; }
+@function is-mm($input) { @return get-unit($input) == 'mm'; }
+@function is-cm($input) { @return get-unit($input) == 'cm'; }
+@function is-in($input) { @return get-unit($input) == 'in'; }
+
+// Relative lengths - font based
+@function  is-em($input) { @return get-unit($input) ==  'em'; }
+@function is-rem($input) { @return get-unit($input) == 'rem'; }
+@function  is-ex($input) { @return get-unit($input) ==  'ex'; }
+@function  is-ch($input) { @return get-unit($input) ==  'ch'; }
+
+// Relative lengths - viewport based
+@function   is-vw($input) { @return get-unit($input) ==   'vw'; }
+@function   is-vh($input) { @return get-unit($input) ==   'vh'; }
+@function is-vmin($input) { @return get-unit($input) == 'vmin'; }
+@function is-vmax($input) { @return get-unit($input) == 'vmax'; }
+
+// Angles
+@function  is-deg($input) { @return get-unit($input) ==  'deg'; }
+@function  is-rad($input) { @return get-unit($input) ==  'rad'; }
+@function is-grad($input) { @return get-unit($input) == 'grad'; }
+@function is-turn($input) { @return get-unit($input) == 'turn'; }
+
+// Time
+@function is-ms($input) { @return get-unit($input) == 'ms'; }
+@function  is-s($input) { @return get-unit($input) ==  's'; }
+
+// Frequencies
+@function  is-hz($input) { @return get-unit($input) ==  'hz'; }
+@function is-khz($input) { @return get-unit($input) == 'khz'; }
+
+// Resolution
+@function  is-dpi($input) { @return get-unit($input) ==  'dpi'; }
+@function is-dpcm($input) { @return get-unit($input) == 'dpcm'; }
+@function is-dppx($input) { @return get-unit($input) == 'dppx'; }
+
+// Percent, Number, String
+@function  is-pct($input) { @return get-unit($input) ==      '%'; }
+@function  is-num($input) { @return get-unit($input) ==    'num'; }
+@function  is-str($input) { @return get-unit($input) == 'string'; }
+
+// List, Map
+@function  is-list($input) { @return get-unit($input) == 'list'; }
+@function   is-map($input) { @return get-unit($input) ==  'map'; }
+
+// Aliases
+@function is-percent($input) { @return is-pct($input); }
+@function  is-number($input) { @return is-num($input); }
+@function  is-string($input) { @return is-str($input); }
