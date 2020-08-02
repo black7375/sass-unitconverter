@@ -64,7 +64,9 @@
 //   to-unit-list(list, unit); same as list
 //   to-unit-map(map, unit);   same as map
 //
-//   is-[unit]                 each unit
+//   is-[unit](input)          each unit
+//   is-num(input, strict)     strict: true(default) => pure number
+//                                     false         => type-is number
 //
 //   Aliases
 //   string(input);
@@ -383,7 +385,9 @@ $base-font-size: $root-font-size !default;
 
 // Percent, Number, String
 @function  is-pct($input) { @return get-unit($input) ==      '%'; }
-@function  is-num($input) { @return get-unit($input) ==    'num'; }
+@function  is-num($input, $strict: true) {
+  @return if($strict, get-unit($input) == 'num', type-of($input) == 'number');
+}
 @function  is-str($input) { @return get-unit($input) == 'string'; }
 
 // List, Map
