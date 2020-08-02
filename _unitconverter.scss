@@ -109,6 +109,128 @@ $base-font-size: $root-font-size !default;
   );
 }
 
+
+// == Conversion ===============================================================
+// get unit
+@function one-unit($input) {
+  @if type-of($input) == 'number' {
+    @return ($input / num($input));
+  }
+  @if type-of($input) != 'string' {
+    @error 'Value for `unit` should be a number or string.';
+  }
+
+  $units: n-units(1);
+  $parsed-unit: false;
+
+  @each $unit in $units {
+    // str-index - find substring in a string
+    // 'px' in '10px' for example
+
+    // $unit is a pair of ['px': 1px] (item in $units)
+    // nth(['px': 1px], 1) returns 'px'
+    // nth(['px': 1px], 2) returns 1px
+
+    @if (str-index($input, nth($unit, 1))) {
+      $parsed-unit: nth($unit, 2);
+    }
+  }
+
+  @if (not $parsed-unit) {
+    @error 'Invalid unit `#{$input}` – must be a valid CSS unit';
+  }
+
+  @return $parsed-unit;
+}
+
+// Conversion function
+@function to-unit($input, $unit) {
+  // Test against valid CSS units
+  $units: n-units(0);
+  $to-unit: map-get($units, $unit);
+
+  // Error handling – wrong $unit
+  // Incomparable units are caught in convertion
+  @if not $to-unit {
+    @error 'Could not convert to `#{$unit}` – must be a valid CSS unit';
+    @return null;
+  }
+
+  // Number/incomparable conversion
+  @if index(num number ex ch vw vh vmin vmax, $unit) {
+    $value: num($input);
+  }
+
+  // EM convertion using px as base
+  @if index(em, unit($input)) {
+    $input: 0px + num($input) * $base-font-size/1px;
+  }
+  @if index(em, $unit) and not unitless($input) {
+    $input: 0px + px($input);
+    $input: num($input) * 1px/$base-font-size;
+  }
+
+  // REM convertion using px as base
+  @if index(rem, unit($input)) {
+    $input: 0px + num($input) * $root-font-size/1px;
+  }
+  @if index(rem, $unit) and not unitless($input) {
+    $input: 0px + $input;
+    $input: num($input) * 1px/$root-font-size;
+  }
+
+  // Bug fix – resolution units seems to be flipped
+  @if index(dpi dpcm dppx, $unit){
+    $units: (dppx: 0dppx, dpcm: 0dpcm, dpi: 0dpi);
+    $input-unit: map-get($units, unit($input));
+    $input: if(1dppx < 95dpi,num($input-unit + (num($input) + $to-unit)),$input);
+  }
+
+  // Convert
+  @return $to-unit + $input;
+}
+
+@function to-unit-list($list, $unit) {
+  $new-list: ();
+
+  @each $value in $list {
+    $converted: to-unit($value, $unit);
+    $new-list: append($new-list, $converted);
+  }
+  @return $new-list;
+}
+
+@function to-unit-map($map, $unit) {
+  $new-map: ();
+
+  @each $key, $value in $map {
+    $converted: to-unit($value, $unit);
+    $new-map: map-merge($new-map, ($key: $converted));
+  }
+  @return $new-map;
+}
+
+//  Convert number to ratio (fraction)
+//  ratio(1.7777778) =>   16/9
+@function ratio($x, $y: null){
+  @if not $y {
+    $n: $x; $y: 1;
+    @while $y < 10 {
+      $x:  $n * 10 - ((10 - $y) * $n);
+      @if $x == round($x){ @return #{$x}/#{$y}; }
+      @else { $y: $y + 1; }
+    }
+    $x: round($n * 1000000); $y: 1000000;
+    @while $x % 10 == 0 { $x: $x/10; $y: $y/10; }
+    @while $x % 5 == 0 { $x: $x/5; $y: $y/5; }
+    @while $x % 2 == 0 { $x: $x/2; $y: $y/2; }
+    @return #{$x}/#{$y};
+  }
+  @else if $x == round($x) and $y == round($y){ @return #{$x}/#{$y}; }
+  @warn 'X and Y must be integers'; @return false;
+}
+
+
 // == Interface - Convert ======================================================
 // Absolute lengths
 @function px($input) { @return to-unit($input, px); }
@@ -256,122 +378,3 @@ $base-font-size: $root-font-size !default;
 @function  is-string($input) { @return is-str($input); }
 
 
-// == Conversion ===============================================================
-// get unit
-@function one-unit($input) {
-  @if type-of($input) == 'number' {
-    @return ($input / num($input));
-  }
-  @if type-of($input) != 'string' {
-    @error 'Value for `unit` should be a number or string.';
-  }
-
-  $units: n-units(1);
-  $parsed-unit: false;
-
-  @each $unit in $units {
-    // str-index - find substring in a string
-    // 'px' in '10px' for example
-
-    // $unit is a pair of ['px': 1px] (item in $units)
-    // nth(['px': 1px], 1) returns 'px'
-    // nth(['px': 1px], 2) returns 1px
-
-    @if (str-index($input, nth($unit, 1))) {
-      $parsed-unit: nth($unit, 2);
-    }
-  }
-
-  @if (not $parsed-unit) {
-    @error 'Invalid unit `#{$input}` – must be a valid CSS unit';
-  }
-
-  @return $parsed-unit;
-}
-
-// Conversion function
-@function to-unit($input, $unit) {
-  // Test against valid CSS units
-  $units: n-units(0);
-  $to-unit: map-get($units, $unit);
-
-  // Error handling – wrong $unit
-  // Incomparable units are caught in convertion
-  @if not $to-unit {
-    @error 'Could not convert to `#{$unit}` – must be a valid CSS unit';
-    @return null;
-  }
-
-  // Number/incomparable conversion
-  @if index(num number ex ch vw vh vmin vmax, $unit) {
-    $value: num($input);
-  }
-
-  // EM convertion using px as base
-  @if index(em, unit($input)) {
-    $input: 0px + num($input) * $base-font-size/1px;
-  }
-  @if index(em, $unit) and not unitless($input) {
-    $input: 0px + px($input);
-    $input: num($input) * 1px/$base-font-size;
-  }
-
-  // REM convertion using px as base
-  @if index(rem, unit($input)) {
-    $input: 0px + num($input) * $root-font-size/1px;
-  }
-  @if index(rem, $unit) and not unitless($input) {
-    $input: 0px + $input;
-    $input: num($input) * 1px/$root-font-size;
-  }
-
-  // Bug fix – resolution units seems to be flipped
-  @if index(dpi dpcm dppx, $unit){
-    $units: (dppx: 0dppx, dpcm: 0dpcm, dpi: 0dpi);
-    $input-unit: map-get($units, unit($input));
-    $input: if(1dppx < 95dpi,num($input-unit + (num($input) + $to-unit)),$input);
-  }
-
-  // Convert
-  @return $to-unit + $input;
-}
-
-@function to-unit-list($list, $unit) {
-  $new-list: ();
-
-  @each $value in $list {
-    $converted: to-unit($value, $unit);
-    $new-list: append($new-list, $converted);
-  }
-  @return $new-list;
-}
-
-@function to-unit-map($map, $unit) {
-  $new-map: ();
-
-  @each $key, $value in $map {
-    $converted: to-unit($value, $unit);
-    $new-map: map-merge($new-map, ($key: $converted));
-  }
-  @return $new-map;
-}
-
-//  Convert number to ratio (fraction)
-//  ratio(1.7777778) =>   16/9
-@function ratio($x, $y: null){
-  @if not $y {
-    $n: $x; $y: 1;
-    @while $y < 10 {
-      $x:  $n * 10 - ((10 - $y) * $n);
-      @if $x == round($x){ @return #{$x}/#{$y}; }
-      @else { $y: $y + 1; }
-    }
-    $x: round($n * 1000000); $y: 1000000;
-    @while $x % 10 == 0 { $x: $x/10; $y: $y/10; }
-    @while $x % 5 == 0 { $x: $x/5; $y: $y/5; }
-    @while $x % 2 == 0 { $x: $x/2; $y: $y/2; }
-    @return #{$x}/#{$y};
-  }
-  @else if $x == round($x) and $y == round($y){ @return #{$x}/#{$y}; }
-  @warn 'X and Y must be integers'; @return false;
-}
