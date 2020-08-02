@@ -205,6 +205,57 @@ $base-font-size: $root-font-size !default;
 @function number($input) { @return num($input); }
 
 
+// == Interface - Check ========================================================
+// Absolute lengths
+@function is-px($input) { @return type-of($input) == 'number' and unit($input) == 'px'; }
+@function is-pt($input) { @return type-of($input) == 'number' and unit($input) == 'pt'; }
+@function is-pc($input) { @return type-of($input) == 'number' and unit($input) == 'pc'; }
+@function is-mm($input) { @return type-of($input) == 'number' and unit($input) == 'mm'; }
+@function is-cm($input) { @return type-of($input) == 'number' and unit($input) == 'cm'; }
+@function is-in($input) { @return type-of($input) == 'number' and unit($input) == 'in'; }
+
+// Relative lengths - font based
+@function  is-em($input) { @return type-of($input) == 'number' and unit($input) ==  'em'; }
+@function is-rem($input) { @return type-of($input) == 'number' and unit($input) == 'rem'; }
+@function  is-ex($input) { @return type-of($input) == 'number' and unit($input) ==  'ex'; }
+@function  is-ch($input) { @return type-of($input) == 'number' and unit($input) ==  'ch'; }
+
+// Relative lengths - viewport based
+@function   is-vw($input) { @return type-of($input) == 'number' and unit($input) ==   'vw'; }
+@function   is-vh($input) { @return type-of($input) == 'number' and unit($input) ==   'vh'; }
+@function is-vmin($input) { @return type-of($input) == 'number' and unit($input) == 'vmin'; }
+@function is-vmax($input) { @return type-of($input) == 'number' and unit($input) == 'vmax'; }
+
+// Angles
+@function  is-deg($input) { @return type-of($input) == 'number' and unit($input) ==  'deg'; }
+@function  is-rad($input) { @return type-of($input) == 'number' and unit($input) ==  'rad'; }
+@function is-grad($input) { @return type-of($input) == 'number' and unit($input) == 'grad'; }
+@function is-turn($input) { @return type-of($input) == 'number' and unit($input) == 'turn'; }
+
+// Time
+@function is-ms($input) { @return type-of($input) == 'number' and unit($input) == 'ms'; }
+@function  is-s($input) { @return type-of($input) == 'number' and unit($input) ==  's'; }
+
+// Frequencies
+@function  is-hz($input) { @return type-of($input) == 'number' and unit($input) ==  'hz'; }
+@function is-khz($input) { @return type-of($input) == 'number' and unit($input) == 'khz'; }
+
+// Resolution
+@function  is-dpi($input) { @return type-of($input) == 'number' and unit($input) ==  'dpi'; }
+@function is-dpcm($input) { @return type-of($input) == 'number' and unit($input) == 'dpcm'; }
+@function is-dppx($input) { @return type-of($input) == 'number' and unit($input) == 'dppx'; }
+
+// Percent, Number, String
+@function  is-pct($input) { @return type-of($input) == 'number' and unit($input) == '%'; }
+@function  is-num($input) { @return type-of($input) == 'number' and unit($input) == ''; }
+@function  is-str($input) { @return type-of($input) == 'string'; }
+
+// Aliases
+@function is-percent($input) { @return is-pct($input); }
+@function  is-number($input) { @return is-num($input); }
+@function  is-string($input) { @return is-str($input); }
+
+
 // == Conversion ===============================================================
 // get unit
 @function one-unit($input) {
