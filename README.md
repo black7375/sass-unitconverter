@@ -98,11 +98,16 @@ Example – how to set a visual size of `18px` on a class nested in an element w
 **Check Unit**
 
 * You can check unit with `is-[unit]($input)`
-````SCSS
-      is-px(16px); ==> true;
-      is-px(16pt);  ==> false;
-`````
 
+* However, there is a strict mode for `num`.(Default value is `true`)
+````SCSS
+      is-px(16px);         ==> true;
+      is-px(16pt);         ==> false;
+      is-num(16,    true); ==> true;
+      is-num(16,   false); ==> true;
+      is-num(16px,  true); ==> false;
+      is-num(16px, false); ==> true;
+`````
 
 Cive it a try on:
 [Sassmeister.com](http://www.sassmeister.com/gist/5943041498e406ff2d1d452ac2c31c9f)
