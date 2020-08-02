@@ -1,6 +1,6 @@
 // ____________________________________________________________________________
 //
-//    Unit Conversion v.2.1.13
+//    Sass Unit Converter v.2.3.0
 //    npm install sass-unitconverter
 //    Based on https://github.com/jakob-e/unitconversion
 // ____________________________________________________________________________
@@ -8,16 +8,16 @@
 //   Function                  Input units
 //
 //   Absolute length
-//   px(input);                px, pt, pc, in, mm, cm, em, rem, number
-//   pt(input);                px, pt, pc, in, mm, cm, em, rem, number
-//   pc(input);                px, pt, pc, in, mm, cm, em, rem, number
-//   in(input);                px, pt, pc, in, mm, cm, em, rem, number
-//   mm(input);                px, pt, pc, in, mm, cm, em, rem, number
-//   cm(input);                px, pt, pc, in, mm, cm, em, rem, number
+//   px(input);                px, pt, pc, mm, cm, in, em, rem, number
+//   pt(input);                px, pt, pc, mm, cm, in, em, rem, number
+//   pc(input);                px, pt, pc, mm, cm, in, em, rem, number
+//   mm(input);                px, pt, pc, mm, cm, in, em, rem, number
+//   cm(input);                px, pt, pc, mm, cm, in, em, rem, number
+//   in(input);                px, pt, pc, mm, cm, in, em, rem, number
 //
 //   Relative length
-//   em(input);                px, pt, pc, in, mm, cm, em, rem, number
-//   rem(input);               px, pt, pc, in, mm, cm, em, rem, number
+//   em(input);                px, pt, pc, mm, cm, in, em, rem, number
+//   rem(input);               px, pt, pc, mm, cm, in, em, rem, number
 //   ex(input);                ex, number
 //   ch(input);                ch, number
 //   vw(input);                vw, number
@@ -64,9 +64,14 @@
 //   to-unit-list(list, unit); same as list
 //   to-unit-map(map, unit);   same as map
 //
+//   is-[unit]                 each unit
+//
 //   Aliases
 //   string(input);
 //   number(input);
+//   is-percent(input);
+//   is-string(input);
+//   is-number(input);
 //
 // ____________________________________________________________________________
 
