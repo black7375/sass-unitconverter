@@ -31,11 +31,6 @@
 //   grad(input);              deg, rad, grad, turn, number
 //   turn(input);              deg, rad, grad, turn, number
 //
-//   Resolution
-//   dpi(input);               dpi, dpcm, dppx, number
-//   dpcm(input);              dpi, dpcm, dppx, number
-//   dppx(input);              dpi, dpcm, dppx, number
-//
 //   Time
 //   s(input);                 s, ms, number
 //   ms(input);                s, ms, number
@@ -43,6 +38,11 @@
 //   Frequency
 //   hz(input);                hz, khz, number
 //   khz(input);               hz, khz, number
+//
+//   Resolution
+//   dpi(input);               dpi, dpcm, dppx, number
+//   dpcm(input);              dpi, dpcm, dppx, number
+//   dppx(input);              dpi, dpcm, dppx, number
 //
 //   String
 //   str(input);               anything not null
@@ -109,7 +109,7 @@ $base-font-size: $root-font-size !default;
   );
 }
 
-// == Interface ================================================================
+// == Interface - Convert ======================================================
 // Absolute lengths
 @function px($input) { @return to-unit($input, px); }
 @function pt($input) { @return to-unit($input, pt); }
@@ -117,25 +117,6 @@ $base-font-size: $root-font-size !default;
 @function mm($input) { @return to-unit($input, mm); }
 @function cm($input) { @return to-unit($input, cm); }
 @function in($input) { @return to-unit($input, in); }
-
-// Angles
-@function  deg($input) { @return to-unit($input,  deg); }
-@function  rad($input) { @return to-unit($input,  rad); }
-@function grad($input) { @return to-unit($input, grad); }
-@function turn($input) { @return to-unit($input, turn); }
-
-// Resolution
-@function  dpi($input) { @return to-unit($input,  dpi); }
-@function dpcm($input) { @return to-unit($input, dpcm); }
-@function dppx($input) { @return to-unit($input, dppx); }
-
-// Time
-@function ms($input) { @return to-unit($input, ms); }
-@function  s($input) { @return to-unit($input,  s); }
-
-// Frequencies
-@function  hz($input) { @return to-unit($input,  hz); }
-@function khz($input) { @return to-unit($input, khz); }
 
 // Relative lengths
 @function em($input...) {
@@ -154,11 +135,30 @@ $base-font-size: $root-font-size !default;
 @function ex($input) { @return to-unit($input, ex); }
 @function ch($input) { @return to-unit($input, ch); }
 
-// Viewport
+// Relative lengths - Viewport
 @function   vw($input) { @return to-unit($input,   vw); }
 @function   vh($input) { @return to-unit($input,   vh); }
 @function vmin($input) { @return to-unit($input, vmin); }
 @function vmax($input) { @return to-unit($input, vmax); }
+
+// Angles
+@function  deg($input) { @return to-unit($input,  deg); }
+@function  rad($input) { @return to-unit($input,  rad); }
+@function grad($input) { @return to-unit($input, grad); }
+@function turn($input) { @return to-unit($input, turn); }
+
+// Time
+@function ms($input) { @return to-unit($input, ms); }
+@function  s($input) { @return to-unit($input,  s); }
+
+// Frequencies
+@function  hz($input) { @return to-unit($input,  hz); }
+@function khz($input) { @return to-unit($input, khz); }
+
+// Resolution
+@function  dpi($input) { @return to-unit($input,  dpi); }
+@function dpcm($input) { @return to-unit($input, dpcm); }
+@function dppx($input) { @return to-unit($input, dppx); }
 
 // Strings and numbers
 // https://css-tricks.com/snippets/sass/strip-unit-function/
