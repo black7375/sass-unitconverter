@@ -1,6 +1,6 @@
 // ____________________________________________________________________________
 //
-//    Sass Unit Converter v.2.3.2
+//    Sass Unit Converter v.2.3.3
 //    npm install sass-unitconverter
 //    Based on https://github.com/jakob-e/unitconversion
 // ____________________________________________________________________________
@@ -73,7 +73,8 @@
 //   number(input);
 //   is-percent(input);
 //   is-string(input);
-//   is-number(input);
+//   is-length(input);
+//   is-number(input, strict);
 //
 // ____________________________________________________________________________
 
@@ -383,10 +384,13 @@ $base-font-size: $root-font-size !default;
 @function is-dpcm($input) { @return get-unit($input) == 'dpcm'; }
 @function is-dppx($input) { @return get-unit($input) == 'dppx'; }
 
-// Percent, Number, String
+// Percent, Number, Length, String
 @function  is-pct($input) { @return get-unit($input) ==      '%'; }
 @function  is-num($input, $strict: true) {
   @return if($strict, get-unit($input) == 'num', type-of($input) == 'number');
+}
+@function  is-len($value) {
+  @return is-num($value) != is-num($value, false);
 }
 @function  is-str($input) { @return get-unit($input) == 'string'; }
 
@@ -396,5 +400,6 @@ $base-font-size: $root-font-size !default;
 
 // Aliases
 @function is-percent($input) { @return is-pct($input); }
-@function  is-number($input) { @return is-num($input); }
+@function  is-number($input, $strict: true) { @return is-num($input, $strict); }
+@function  is-length($input) { @return is-len($input); }
 @function  is-string($input) { @return is-str($input); }
