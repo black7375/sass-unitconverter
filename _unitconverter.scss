@@ -67,6 +67,8 @@
 //   is-[unit](input)          each unit
 //   is-num(input, strict)     strict: true(default) => pure number
 //                                     false         => type-is number
+//   is-null(input, strict)    strict: true(default) => pure null
+//                                     false         => null, length is 0(list, map, string)
 //
 //   Aliases
 //   string(input);
@@ -394,9 +396,15 @@ $base-font-size: $root-font-size !default;
 }
 @function  is-str($input) { @return get-unit($input) == 'string'; }
 
-// List, Map
-@function  is-list($input) { @return get-unit($input) == 'list'; }
-@function   is-map($input) { @return get-unit($input) ==  'map'; }
+// ETC: SASS Types
+@function  is-null($input, $strict: true) {
+  $null-check: get-unit($input) == 'null';
+  @return if($strict, $null-check, $null-check or length($input) == 0 or $input == '');
+}
+@function  is-bool($input) { @return get-unit($input) ==  'bool';  }
+@function  is-list($input) { @return get-unit($input) ==  'list';  }
+@function   is-map($input) { @return get-unit($input) ==   'map';  }
+@function is-color($input) { @return get-unit($input) == 'color'; }
 
 // Aliases
 @function is-percent($input) { @return is-pct($input); }
