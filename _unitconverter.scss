@@ -391,8 +391,8 @@ $base-font-size: $root-font-size !default;
 @function  is-num($input, $strict: true) {
   @return if($strict, get-unit($input) == 'num', type-of($input) == 'number');
 }
-@function  is-len($value) {
-  @return is-num($value) != is-num($value, false);
+@function  is-len($input) {
+  @return is-num($input) != is-num($input, false);
 }
 @function  is-str($input) { @return get-unit($input) == 'string'; }
 
@@ -401,10 +401,27 @@ $base-font-size: $root-font-size !default;
   $null-check: get-unit($input) == 'null';
   @return if($strict, $null-check, $null-check or length($input) == 0 or $input == '');
 }
-@function  is-bool($input) { @return get-unit($input) ==  'bool';  }
-@function  is-list($input) { @return get-unit($input) ==  'list';  }
-@function   is-map($input) { @return get-unit($input) ==   'map';  }
+@function  is-bool($input) { @return get-unit($input) ==  'bool'; }
+@function  is-list($input) { @return get-unit($input) ==  'list'; }
+@function   is-map($input) { @return get-unit($input) ==   'map'; }
 @function is-color($input) { @return get-unit($input) == 'color'; }
+
+@function is-equal($inputA, $inputB) { @return $inputA == $inputB; }
+@function is-exist($input, $strict: true) {
+  $variable-exists: variable-exists($input);
+  @return if($strict, $variable-exists, $variable-exists and $input);
+}
+@function is-calc($input) {
+  @if not is-str($input) {
+    @return false;
+  }
+  @else {
+    $str-front:  str-slice($input, 1, 5) == "calc(";
+    $str-back:   str-slice($input, str-length($input)) == ")";
+    @return $str-front and $str-back;
+  }
+}
+
 
 // Aliases
 @function is-percent($input) { @return is-pct($input); }
