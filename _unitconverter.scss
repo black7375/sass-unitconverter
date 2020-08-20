@@ -121,7 +121,7 @@ $base-font-size: $root-font-size !default;
 
 
 // == Conversion ===============================================================
-// get unit
+// Get unit
 @function get-unit($input) {
   $type: type-of($input);
   @if $type == 'number' {
@@ -130,6 +130,8 @@ $base-font-size: $root-font-size !default;
   }
   @return $type;
 }
+
+// Get 1size of value
 @function one-unit($input) {
   $type: type-of($input);
   @if $type == 'number' {
@@ -162,8 +164,27 @@ $base-font-size: $root-font-size !default;
   @return $parsed-unit;
 }
 
+// Get break
+@function get-break($unit, $break-width, $break-height) {
+  $break-width:  if(is-null($break-width),  null, px($break-width, $break-width,  $break-height));
+  $break-height: if(is-null($break-height), null, px($break-height, $break-width, $break-height));
+  
+  @if $unit == vw {
+    @return $break-width;
+  }
+  @if $unit == vh {
+    @return $break-height;
+  }
+  @if $unit == vmin {
+    @return min($break-width, $break-height);
+  }
+  @if $unit == vmax {
+    @return max($break-width, $break-height);
+  }
+}
+
 // Conversion function
-@function to-unit($input, $unit) {
+@function to-unit($input, $unit, $break-width: null, $break-height: null) {
   // Test against valid CSS units
   $units: n-units(0);
   $to-unit: map-get($units, $unit);
@@ -176,7 +197,7 @@ $base-font-size: $root-font-size !default;
   }
 
   // Number/incomparable conversion
-  @if index(num number ex ch vw vh vmin vmax, $unit) {
+  @if index(num number ex ch, $unit) {
     $value: num($input);
   }
 
@@ -204,26 +225,41 @@ $base-font-size: $root-font-size !default;
     $input-unit: map-get($units, unit($input));
     $input: if(1dppx < 95dpi,num($input-unit + (num($input) + $to-unit)),$input);
   }
+  
+  // $input is VW, VH, VMIN, VMAX
+  @if index(vw vh vmin vmax, unit($input)) {
+    $break: get-break(unit($input), $break-width, $break-height);
+    $input: ($break * num($input)) / 100;
+  }
+  
+  // $unit is VW, VH, VMIN, VNAX
+  @if index(vw vh vmin max, $unit) and not index(num number, unit($input)) {
+    $break: num(get-break($unit, $break-width, $break-height));
+    $input: num(px($input, $break-width, $break-height));
+    $input: ($input / $break) * 100;
+  }
 
   // Convert
   @return $to-unit + $input;
 }
 
-@function to-unit-list($list, $unit) {
+// Convesion List
+@function to-unit-list($list, $unit, $break-width: null, $break-height: null) {
   $new-list: ();
 
   @each $value in $list {
-    $converted: to-unit($value, $unit);
+    $converted: to-unit($value, $unit, $break-width, $break-height);
     $new-list: append($new-list, $converted);
   }
   @return $new-list;
 }
 
-@function to-unit-map($map, $unit) {
+// Conversion Map
+@function to-unit-map($map, $unit, $break-width: null, $break-height: null) {
   $new-map: ();
 
   @each $key, $value in $map {
-    $converted: to-unit($value, $unit);
+    $converted: to-unit($value, $unit, $break-width, $break-height);
     $new-map: map-merge($new-map, ($key: $converted));
   }
   @return $new-map;
@@ -252,54 +288,54 @@ $base-font-size: $root-font-size !default;
 
 // == Interface - Convert ======================================================
 // Absolute lengths
-@function px($input) { @return to-unit($input, px); }
-@function pt($input) { @return to-unit($input, pt); }
-@function pc($input) { @return to-unit($input, pc); }
-@function mm($input) { @return to-unit($input, mm); }
-@function cm($input) { @return to-unit($input, cm); }
-@function in($input) { @return to-unit($input, in); }
+@function px($input, $break-width: null, $break-height: null) { @return to-unit($input, px, $break-width, $break-height); }
+@function pt($input, $break-width: null, $break-height: null) { @return to-unit($input, pt, $break-width, $break-height); }
+@function pc($input, $break-width: null, $break-height: null) { @return to-unit($input, pc, $break-width, $break-height); }
+@function mm($input, $break-width: null, $break-height: null) { @return to-unit($input, mm, $break-width, $break-height); }
+@function cm($input, $break-width: null, $break-height: null) { @return to-unit($input, cm, $break-width, $break-height); }
+@function in($input, $break-width: null, $break-height: null) { @return to-unit($input, in, $break-width, $break-height); }
 
 // Relative lengths
-@function em($input...) {
-  $em: to-unit(nth($input,1), em);
+@function em($input, $break-width: null, $break-height: null) {
+  $em: to-unit(nth($input, 1), em, $break-width, $break-height);
   // Adjust for compounds (visual size)
   @if length($input) > 1 {
-    @for $i from 2 through length($input){
-      $em: $em / num(em(nth($input,$i)));
+    @for $i from 2 through length($input) {
+      $em: $em / num(em(nth($input, $i), $break-width, $break-height));
     }
   }
   @return $em;
 }
-@function rem($input) { @return to-unit($input, rem); }
+@function rem($input, $break-width: null, $break-height: null) { @return to-unit($input, rem, $break-width, $break-height); }
 
 // Inconvertible relative lengths – depends on font
-@function ex($input) { @return to-unit($input, ex); }
-@function ch($input) { @return to-unit($input, ch); }
+@function ex($input, $break-width: null, $break-height: null) { @return to-unit($input, ex, $break-width, $break-height); }
+@function ch($input, $break-width: null, $break-height: null) { @return to-unit($input, ch, $break-width, $break-height); }
 
 // Relative lengths - Viewport
-@function   vw($input) { @return to-unit($input,   vw); }
-@function   vh($input) { @return to-unit($input,   vh); }
-@function vmin($input) { @return to-unit($input, vmin); }
-@function vmax($input) { @return to-unit($input, vmax); }
+@function   vw($input, $break-width: null, $break-height: null) { @return to-unit($input,   vw, $break-width, $break-height); }
+@function   vh($input, $break-width: null, $break-height: null) { @return to-unit($input,   vh, $break-width, $break-height); }
+@function vmin($input, $break-width: null, $break-height: null) { @return to-unit($input, vmin, $break-width, $break-height); }
+@function vmax($input, $break-width: null, $break-height: null) { @return to-unit($input, vmax, $break-width, $break-height); }
 
 // Angles
-@function  deg($input) { @return to-unit($input,  deg); }
-@function  rad($input) { @return to-unit($input,  rad); }
-@function grad($input) { @return to-unit($input, grad); }
-@function turn($input) { @return to-unit($input, turn); }
+@function  deg($input, $break-width: null, $break-height: null) { @return to-unit($input,  deg, $break-width, $break-height); }
+@function  rad($input, $break-width: null, $break-height: null) { @return to-unit($input,  rad, $break-width, $break-height); }
+@function grad($input, $break-width: null, $break-height: null) { @return to-unit($input, grad, $break-width, $break-height); }
+@function turn($input, $break-width: null, $break-height: null) { @return to-unit($input, turn, $break-width, $break-height); }
 
 // Time
-@function ms($input) { @return to-unit($input, ms); }
-@function  s($input) { @return to-unit($input,  s); }
+@function ms($input, $break-width: null, $break-height: null) { @return to-unit($input, ms, $break-width, $break-height); }
+@function  s($input, $break-width: null, $break-height: null) { @return to-unit($input,  s, $break-width, $break-height); }
 
 // Frequencies
-@function  hz($input) { @return to-unit($input,  hz); }
-@function khz($input) { @return to-unit($input, khz); }
+@function  hz($input, $break-width: null, $break-height: null) { @return to-unit($input,  hz, $break-width, $break-height); }
+@function khz($input, $break-width: null, $break-height: null) { @return to-unit($input, khz, $break-width, $break-height); }
 
 // Resolution
-@function  dpi($input) { @return to-unit($input,  dpi); }
-@function dpcm($input) { @return to-unit($input, dpcm); }
-@function dppx($input) { @return to-unit($input, dppx); }
+@function  dpi($input, $break-width: null, $break-height: null) { @return to-unit($input,  dpi, $break-width, $break-height); }
+@function dpcm($input, $break-width: null, $break-height: null) { @return to-unit($input, dpcm, $break-width, $break-height); }
+@function dppx($input, $break-width: null, $break-height: null) { @return to-unit($input, dppx, $break-width, $break-height); }
 
 // Strings and numbers
 // https://css-tricks.com/snippets/sass/strip-unit-function/
@@ -422,7 +458,6 @@ $base-font-size: $root-font-size !default;
     @return $str-front and $str-back;
   }
 }
-
 
 // Aliases
 @function is-percent($input) { @return is-pct($input); }
