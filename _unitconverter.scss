@@ -306,6 +306,7 @@ $base-font-size: $root-font-size !default;
 // https://stackoverflow.com/questions/47630616/scss-arithmetic-operation-with-string
 @function str($input) { @return #{$input};  }
 @function num($input) {
+  @if is-num($input) { @return $input; }
   @if type-of($input) == 'number' and not unitless($input) {
     @return $input / ($input * 0 + 1);
   } @else if type-of($input) != 'string' {
