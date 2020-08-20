@@ -168,7 +168,7 @@ $base-font-size: $root-font-size !default;
 @function get-break($unit, $break-width, $break-height) {
   $break-width:  if(is-null($break-width),  null, px($break-width, $break-width,  $break-height));
   $break-height: if(is-null($break-height), null, px($break-height, $break-width, $break-height));
-  
+
   @if $unit == vw {
     @return $break-width;
   }
@@ -225,13 +225,13 @@ $base-font-size: $root-font-size !default;
     $input-unit: map-get($units, unit($input));
     $input: if(1dppx < 95dpi,num($input-unit + (num($input) + $to-unit)),$input);
   }
-  
+
   // $input is VW, VH, VMIN, VMAX
   @if index(vw vh vmin vmax, unit($input)) {
     $break: get-break(unit($input), $break-width, $break-height);
     $input: ($break * num($input)) / 100;
   }
-  
+
   // $unit is VW, VH, VMIN, VNAX
   @if index(vw vh vmin max, $unit) and not index(num number, unit($input)) {
     $break: num(get-break($unit, $break-width, $break-height));
@@ -263,6 +263,33 @@ $base-font-size: $root-font-size !default;
     $new-map: map-merge($new-map, ($key: $converted));
   }
   @return $new-map;
+}
+
+// Trampoline Function
+@function to-unit-converted($value, $unit) {
+  @return if(is-num($value, false),
+             to-unit($value, $unit), to-unit-data($value, $unit));
+}
+
+// Conversion most of the data.
+@function to-unit-data($data, $unit) {
+  $new-data: ();
+  @if      is-list($data) {
+    @each $value in $data {
+      $converted: to-unit-converted($value, $unit);
+      $new-data: append($new-data, $converted);
+    }
+  }
+  @else if is-map($data) {
+    @each $key, $value in $data {
+      $converted: to-unit-converted($value, $unit);
+      $new-data: map-merge($new-data, ($key: $converted));
+    }
+  }
+  @else {
+    @return if(is-num($data, false), to-unit($data, $unit), $data);
+  }
+  @return $new-data;
 }
 
 //  Convert number to ratio (fraction)
