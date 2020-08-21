@@ -5,70 +5,73 @@
 //    Based on https://github.com/jakob-e/unitconversion
 // ____________________________________________________________________________
 //
-//   Function                  Input units
+//   Function                    Input units
 //
 //   Absolute length
-//   px(input);                px, pt, pc, mm, cm, in, em, rem, number
-//   pt(input);                px, pt, pc, mm, cm, in, em, rem, number
-//   pc(input);                px, pt, pc, mm, cm, in, em, rem, number
-//   mm(input);                px, pt, pc, mm, cm, in, em, rem, number
-//   cm(input);                px, pt, pc, mm, cm, in, em, rem, number
-//   in(input);                px, pt, pc, mm, cm, in, em, rem, number
+//   px(input, width, height);   px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   pt(input, width, height);   px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   pc(input, width, height);   px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   mm(input, width, height);   px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   cm(input, width, height);   px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   in(input, width, height);   px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
 //
 //   Relative length
-//   em(input);                px, pt, pc, mm, cm, in, em, rem, number
-//   rem(input);               px, pt, pc, mm, cm, in, em, rem, number
-//   ex(input);                ex, number
-//   ch(input);                ch, number
-//   vw(input);                vw, number
-//   vh(input);                vh, number
-//   vmin(input);              vmin, number
-//   vmax(input);              vmax, number
+//   em(input, width, height);   px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   rem(input, width, height);  px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   ex(input);                  ex, number
+//   ch(input);                  ch, number
+//   vw(input, width, height);   px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   vh(input, width, height);   px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   vmin(input, width, height); px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   vmax(input, width, height); px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
 //
 //   Angle
-//   deg(input);               deg, rad, grad, turn, number
-//   rad(input);               deg, rad, grad, turn, number
-//   grad(input);              deg, rad, grad, turn, number
-//   turn(input);              deg, rad, grad, turn, number
+//   deg(input);                 deg, rad, grad, turn, number
+//   rad(input);                 deg, rad, grad, turn, number
+//   grad(input);                deg, rad, grad, turn, number
+//   turn(input);                deg, rad, grad, turn, number
 //
 //   Time
-//   s(input);                 s, ms, number
-//   ms(input);                s, ms, number
+//   s(input);                   s, ms, number
+//   ms(input);                  s, ms, number
 //
 //   Frequency
-//   hz(input);                hz, khz, number
-//   khz(input);               hz, khz, number
+//   hz(input);                  hz, khz, number
+//   khz(input);                 hz, khz, number
 //
 //   Resolution
-//   dpi(input);               dpi, dpcm, dppx, number
-//   dpcm(input);              dpi, dpcm, dppx, number
-//   dppx(input);              dpi, dpcm, dppx, number
+//   dpi(input);                 dpi, dpcm, dppx, number
+//   dpcm(input);                dpi, dpcm, dppx, number
+//   dppx(input);                dpi, dpcm, dppx, number
 //
 //   String
-//   str(input);               anything not null
+//   str(input);                 anything not null
 //
 //   Number, int and uint
-//   num(input);               px, pt, pc, mm, cm, in, em, rem, ex, ch,
-//                             vw, vh, vmin, vmax, deg, rad, grad, turn,
-//                             dpi, dpcm, dppx, s, ms, hz, khz, number, string
-//   int(input);               as number
-//   uint(input);              as number
+//   num(input);                 px, pt, pc, mm, cm, in, em, rem, ex, ch,
+//                               vw, vh, vmin, vmax, deg, rad, grad, turn,
+//                               dpi, dpcm, dppx, s, ms, hz, khz, number, string
+//   int(input);                 as number
+//   uint(input);                as number
 //
-//   ratio                     number to fraction
+//   ratio                       number to fraction
 //
 //   ETC Convert
-//   one-unit(input);          px, pt, pc, mm, cm, in, em, rem, ex, ch,
-//                             vw, vh, vmin, vmax, deg, rad, grad, turn,
-//                             dpi, dpcm, dppx, s, ms, hz, khz, number
-//   to-unit(input, unit);     same
-//   to-unit-list(list, unit); same as list
-//   to-unit-map(map, unit);   same as map
+//   one-unit(input);            px, pt, pc, mm, cm, in, em, rem, ex, ch,
+//                               vw, vh, vmin, vmax, deg, rad, grad, turn,
+//                               dpi, dpcm, dppx, s, ms, hz, khz, number
+//   to-unit(input, unit);       same
+//   to-unit-list(list, unit);   same as list
+//   to-unit-map(map, unit);     same as map
 //
-//   is-[unit](input)          each unit
-//   is-num(input, strict)     strict: true(default) => pure number
-//                                     false         => type-is number
-//   is-null(input, strict)    strict: true(default) => pure null
-//                                     false         => null, length is 0(list, map, string)
+//   is-[unit](input)            each unit
+//   is-num(input, strict)       strict: true(default) => pure number
+//                                       false         => type-is number
+//   is-null(input, strict)      strict: true(default) => pure null
+//                                       false         => null, length is 0(list, map, string)
+//   is-exist(input, strict)     strict: true(default) => pure exist
+//                                       false         => exist, not false
+//   is-equal(inputA, inputB)    anything
 //
 //   Aliases
 //   string(input);

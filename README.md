@@ -53,69 +53,84 @@ Example – how to set a visual size of `18px` on a class nested in an element w
 `````
 * If you use unit conversion in relation to the font shorthand syntax be aware that line-height "/" will cause division. To prevent this from happening you can either either interpolate the value or use + to add the pieces together without calculation:
 ````SCSS
-      h2 { 
+      h2 {
           font:300 #{em(24px)}/3 'Lato', sans-serif;
+      }
+````
+* `$width`[vw's basis, break-width], `$break-height`[vh's basis, break-height] are conditional arguments used when `vw`(`$break-width`), `vh`(`$break-height`), `vmin`(`$break-width`, `$break-height`), `vmax`(`$break-width`, `$break-height`).
+````SCSS
+      h2 {
+          font-size: vw(18px,  $width: 1200px);  // 1.5vw
+          font-size: px(1.2vh, $height: 600px);  // 7.2px
+          font-size: vmin(18px, 1200px, 600px);  // 3vmin
+          font-size: vmax(1.2vh, 1200px, 600px); // 0.6vmax
       }
 ````
 
 **Conversion Table**
-| **Type**        |                       **Function** | **Input Units**                                                                                                                |
-|-----------------|-----------------------------------:|:------------------------------------------------------------------------------------------------------------------------------:|
-| Absolute length |                        px($input); | px, pt, pc, in, mm, cm, em, rem, number                                                                                        |
-|                 |                        pt($input); | ǀǀ                                                                                                                             |
-|                 |                        pc($input); | ǀǀ                                                                                                                             |
-|                 |                        mm($input); | ǀǀ                                                                                                                             |
-|                 |                        cm($input); | ǀǀ                                                                                                                             |
-|                 |                        in($input); | ǀǀ                                                                                                                             |
-| Relative length |                        em($input); | ǀǀ                                                                                                                             |
-|                 |                       rem($input); | ǀǀ                                                                                                                             |
-|                 |                        ex($input); | ex, num                                                                                                                        |
-|                 |                        ch($input); | ch, num                                                                                                                        |
-|                 |                        vw($input); | vw, num                                                                                                                        |
-|                 |                        vh($input); | vh, num                                                                                                                        |
-|                 |                      vmin($input); | vmin, num                                                                                                                      |
-|                 |                      vmax($input); | vmax, num                                                                                                                      |
-| Angle           |                        em($input); | deg, rad, grad, turn, num                                                                                                      |
-|                 |                       rad($input); | ǀǀ                                                                                                                             |
-|                 |                      grad($input); | ǀǀ                                                                                                                             |
-|                 |                      turn($input); | ǀǀ                                                                                                                             |
-| Resulution      |                       dpi($input); | dpi, dpcm, dppx, num                                                                                                           |
-|                 |                      dpcm($input); | ǀǀ                                                                                                                             |
-|                 |                      dppx($input); | ǀǀ                                                                                                                             |
-| Time            |                        ms($input); | ms, s, num                                                                                                                     |
-|                 |                         s($input); | ǀǀ                                                                                                                             |
-| Frequency       |                        hz($input); | Hz, kHz, num                                                                                                                   |
-|                 |                       khz($input); | ǀǀ                                                                                                                             |
-| String          | str($input);  <br> string($input); | Anything not null                                                                                                              |
-| Number          |  num($input); <br> number($input); | px, pt, pc, mm, cm, in,  em, rem, ex, ch,vw, vh, vmin, vmax, deg, rad, grad, turn,dpi, dpcm, dppx, s, ms, hz, khz, num, string |
-|                 |                       int($input); | ǀǀ                                                                                                                             |
-|                 |                      uint($input); | ǀǀ                                                                                                                             |
-| Etc             |                  one-unit($input); | px, pt, pc, mm, cm, in,  em, rem, ex, ch,vw, vh, vmin, vmax, deg, rad, grad, turn,dpi, dpcm, dppx, s, ms, hz, khz, num         |
-|                 |            to-unit($input, $unit); | ǀǀ                                                                                                                             |
-|                 |       to-unit-list($input, $unit); | ǀǀ                                                                                                                             |
-|                 |        to-unit-map($input, $unit); | ǀǀ                                                                                                                             |
+| **Type**        |                                  **Function** | **Input Units**                                                                                                                |
+|-----------------|----------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------------:|
+| Absolute length |                  px($input, $width, $height); | px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number                                                                    |
+|                 |                  pt($input, $width, $height); | ǀǀ                                                                                                                             |
+|                 |                  pc($input, $width, $height); | ǀǀ                                                                                                                             |
+|                 |                  mm($input, $width, $height); | ǀǀ                                                                                                                             |
+|                 |                  cm($input, $width, $height); | ǀǀ                                                                                                                             |
+|                 |                  in($input, $width, $height); | ǀǀ                                                                                                                             |
+| Relative length |                  em($input, $width, $height); | ǀǀ                                                                                                                             |
+|                 |                 rem($input, $width, $height); | ǀǀ                                                                                                                             |
+|                 |                                   ex($input); | ex, num                                                                                                                        |
+|                 |                                   ch($input); | ch, num                                                                                                                        |
+|                 |                  vw($input, $width, $height); | px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number                                                                    |
+|                 |                  vh($input, $width, $height); | px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number                                                                    |
+|                 |                vmin($input, $width, $height); | px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number                                                                    |
+|                 |                vmax($input, $width, $height); | px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number                                                                    |
+| Angle           |                                  deg($input); | deg, rad, grad, turn, num                                                                                                      |
+|                 |                                  rad($input); | ǀǀ                                                                                                                             |
+|                 |                                 grad($input); | ǀǀ                                                                                                                             |
+|                 |                                 turn($input); | ǀǀ                                                                                                                             |
+| Resulution      |                                  dpi($input); | dpi, dpcm, dppx, num                                                                                                           |
+|                 |                                 dpcm($input); | ǀǀ                                                                                                                             |
+|                 |                                 dppx($input); | ǀǀ                                                                                                                             |
+| Time            |                                   ms($input); | ms, s, num                                                                                                                     |
+|                 |                                    s($input); | ǀǀ                                                                                                                             |
+| Frequency       |                                   hz($input); | Hz, kHz, num                                                                                                                   |
+|                 |                                  khz($input); | ǀǀ                                                                                                                             |
+| String          |            str($input);  <br> string($input); | Anything not null                                                                                                              |
+| Number          |             num($input); <br> number($input); | px, pt, pc, mm, cm, in,  em, rem, ex, ch,vw, vh, vmin, vmax, deg, rad, grad, turn,dpi, dpcm, dppx, s, ms, hz, khz, num, string |
+|                 |                                  int($input); | ǀǀ                                                                                                                             |
+|                 |                                 uint($input); | ǀǀ                                                                                                                             |
+| Etc             |                             one-unit($input); | px, pt, pc, mm, cm, in,  em, rem, ex, ch,vw, vh, vmin, vmax, deg, rad, grad, turn,dpi, dpcm, dppx, s, ms, hz, khz, num         |
+|                 |      to-unit($input, $unit, $width, $height); | ǀǀ                                                                                                                             |
+|                 | to-unit-list($input, $unit, $width, $height); | ǀǀ                                                                                                                             |
+|                 |  to-unit-map($input, $unit, $width, $height); | ǀǀ                                                                                                                             |
+|                 | to-unit-data($input, $unit, $width, $height); | ǀǀ                                                                                                                             |
 
 **Check Unit**
 
 * You can check unit & types with `is-[unit]($input)`
 
-* Types: `null`, `bool`, `color`, `list`, `map`
+* Types: `null`, `bool`, `color`, `list`, `map`, `color`, `calc`, `exist`
 
-* However, there is a strict mode for `num`, `null`.(Default value is `true`)
+* However, there is a strict mode for `num`, `null`, `exist`.(Default value is `true`)
 ````SCSS
       is-px(16px);         ==> true;
       is-px(16pt);         ==> false;
-      
+
       is-num(16,    true); ==> true;
       is-num(16px,  true); ==> false;
       is-num(16px, false); ==> true;
-      
+
       is-null(null, true); ==> true;
       is-null((),   true); ==> false;
       is-null('',   true); ==> false;
       is-null((),  false); ==> true;
       is-null('',  false); ==> true;
+
+      is-exist($exist-var,  true); ==> true;
+      is-exist($true-var,  false); ==> true;
+      is-exist($false-var, false); ==> false;
 `````
+* `is-equal($inputA, $inputB)`: Checks if two values are equal.
 
 Cive it a try on:
 [Sassmeister.com](http://www.sassmeister.com/gist/5943041498e406ff2d1d452ac2c31c9f)
