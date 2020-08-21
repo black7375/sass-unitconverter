@@ -233,7 +233,7 @@ $base-font-size: $root-font-size !default;
   }
 
   // $unit is VW, VH, VMIN, VNAX using px as base
-  @if index(vw vh vmin max, $unit) and not index(num number, unit($input)) {
+  @if index(vw vh vmin vmax, $unit) and not index(num number, unit($input)) {
     $break: num(get-break($unit, $width, $height));
     $input: num(px($input, $width, $height));
     $input: ($input / $break) * 100;
