@@ -201,6 +201,19 @@ $base-font-size: $root-font-size !default;
     $value: num($input);
   }
 
+  // $input is VW, VH, VMIN, VMAX using px as base
+  @if index(vw vh vmin vmax, unit($input)) {
+    $break: get-break(unit($input), $width, $height);
+    $input: ($break * num($input)) / 100;
+  }
+
+  // $unit is VW, VH, VMIN, VNAX using px as base
+  @if index(vw vh vmin vmax, $unit) and not index(num number, unit($input)) {
+    $break: num(get-break($unit, $width, $height));
+    $input: num(px($input, $width, $height));
+    $input: ($input / $break) * 100;
+  }
+
   // EM convertion using px as base
   @if index(em, unit($input)) {
     $input: 0px + num($input) * $base-font-size/1px;
@@ -224,19 +237,6 @@ $base-font-size: $root-font-size !default;
     $units: (dppx: 0dppx, dpcm: 0dpcm, dpi: 0dpi);
     $input-unit: map-get($units, unit($input));
     $input: if(1dppx < 95dpi,num($input-unit + (num($input) + $to-unit)),$input);
-  }
-
-  // $input is VW, VH, VMIN, VMAX using px as base
-  @if index(vw vh vmin vmax, unit($input)) {
-    $break: get-break(unit($input), $width, $height);
-    $input: ($break * num($input)) / 100;
-  }
-
-  // $unit is VW, VH, VMIN, VNAX using px as base
-  @if index(vw vh vmin vmax, $unit) and not index(num number, unit($input)) {
-    $break: num(get-break($unit, $width, $height));
-    $input: num(px($input, $width, $height));
-    $input: ($input / $break) * 100;
   }
 
   // Convert
