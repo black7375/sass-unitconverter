@@ -24,10 +24,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Merge master -> npm
-        uses: devmasx/merge-branch@v1.3.0
+        uses: mtanzi/action-automerge@v1
+        id: merge
         with:
-          type: now
-          from_branch: master
-          target_branch: npm
+          source: master
+          target: npm
           github_token: ${{secrets.TOKEN_GITHUB}}
 
