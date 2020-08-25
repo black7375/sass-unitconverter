@@ -269,28 +269,29 @@ $base-font-size: $root-font-size !default;
 }
 
 // Trampoline Function
-@function to-unit-converted($value, $unit) {
+@function to-unit-converted($value, $unit, $width: null, $height: null) {
   @return if(is-num($value, false),
-             to-unit($value, $unit), to-unit-data($value, $unit));
+             to-unit($value, $unit, $width, $height),
+             to-unit-data($value, $unit, $width, $height));
 }
 
 // Conversion most of the data.
-@function to-unit-data($data, $unit) {
+@function to-unit-data($data, $unit, $width: null, $height: null) {
   $new-data: ();
   @if      is-list($data) {
     @each $value in $data {
-      $converted: to-unit-converted($value, $unit);
+      $converted: to-unit-converted($value, $unit, $width, $height);
       $new-data: append($new-data, $converted);
     }
   }
   @else if is-map($data) {
     @each $key, $value in $data {
-      $converted: to-unit-converted($value, $unit);
+      $converted: to-unit-converted($value, $unit, $width, $height);
       $new-data: map-merge($new-data, ($key: $converted));
     }
   }
   @else {
-    @return if(is-num($data, false), to-unit($data, $unit), $data);
+    @return if(is-num($data, false), to-unit($data, $unit, $width, $height), $data);
   }
   @return $new-data;
 }

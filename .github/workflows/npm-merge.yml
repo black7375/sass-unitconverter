@@ -1,0 +1,33 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
+
+name: CI
+on:
+  push:
+    branches: [ master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm install
+      - run: npm ci
+      - run: npm test
+
+  sync-branch:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Merge master -> npm
+        uses: mtanzi/action-automerge@v1
+        id: merge
+        with:
+          source: master
+          target: npm
+          github_token: ${{secrets.TOKEN_GITHUB}}
+

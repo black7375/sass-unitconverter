@@ -48,7 +48,7 @@ Rather than going with the "good" old fromUnit-to-toUnit(fromUnit) syntax this f
 Example – how to set a visual size of `18px` on a class nested in an element with a font-size of `2em`:
 ````SCSS
       .class {
-          font-size: em(18px, 2em);  ==>   0.5625em;
+          font-size: em(18px 2em); //  0.5625em;
       }
 `````
 * If you use unit conversion in relation to the font shorthand syntax be aware that line-height "/" will cause division. To prevent this from happening you can either either interpolate the value or use + to add the pieces together without calculation:
@@ -113,27 +113,27 @@ Example – how to set a visual size of `18px` on a class nested in an element w
 
 * However, there is a strict mode for `num`, `null`, `exist`.(Default value is `true`)
 ````SCSS
-      is-px(16px);         ==> true;
-      is-px(16pt);         ==> false;
+      is-px(16px);         // true;
+      is-px(16pt);         // false;
 
-      is-num(16,    true); ==> true;
-      is-num(16px,  true); ==> false;
-      is-num(16px, false); ==> true;
+      is-num(16,    true); // true;
+      is-num(16px,  true); // false;
+      is-num(16px, false); // true;
 
-      is-null(null, true); ==> true;
-      is-null((),   true); ==> false;
-      is-null('',   true); ==> false;
-      is-null((),  false); ==> true;
-      is-null('',  false); ==> true;
+      is-null(null, true); // true;
+      is-null((),   true); // false;
+      is-null('',   true); // false;
+      is-null((),  false); // true;
+      is-null('',  false); // true;
 
-      is-exist($exist-var,  true); ==> true;
-      is-exist($true-var,  false); ==> true;
-      is-exist($false-var, false); ==> false;
+      is-exist($exist-var,  true); // true;
+      is-exist($true-var,  false); // true;
+      is-exist($false-var, false); // false;
 `````
 * `is-equal($inputA, $inputB)`: Checks if two values are equal.
 
 Cive it a try on:
-[Sassmeister.com](http://www.sassmeister.com/gist/5943041498e406ff2d1d452ac2c31c9f)
+[Codepen](https://codepen.io/black7375/pen/JjXbaGW?editors=0100)(Try menu `View Compiled CSS`)
 
 
 <hr>
