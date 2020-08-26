@@ -81,9 +81,9 @@ Example – how to set a visual size of `18px` on a class nested in an element w
 |                 |                                   ex($input); | ex, num                                                                                                                        |
 |                 |                                   ch($input); | ch, num                                                                                                                        |
 |                 |                  vw($input, $width, $height); | px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number                                                                    |
-|                 |                  vh($input, $width, $height); | px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number                                                                    |
-|                 |                vmin($input, $width, $height); | px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number                                                                    |
-|                 |                vmax($input, $width, $height); | px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number                                                                    |
+|                 |                  vh($input, $width, $height); | ǀǀ                                                                                                                             |
+|                 |                vmin($input, $width, $height); | ǀǀ                                                                                                                             |
+|                 |                vmax($input, $width, $height); | ǀǀ                                                                                                                             |
 | Angle           |                                  deg($input); | deg, rad, grad, turn, num                                                                                                      |
 |                 |                                  rad($input); | ǀǀ                                                                                                                             |
 |                 |                                 grad($input); | ǀǀ                                                                                                                             |

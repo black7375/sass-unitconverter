@@ -4,9 +4,15 @@
 name: CI
 on:
   push:
-    branches: [ master]
+    branches: [ master ]
 
 jobs:
+  link-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: gaurav-nelson/github-action-markdown-link-check@v1
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -19,7 +25,7 @@ jobs:
       - run: npm test
 
   sync-branch:
-    needs: build
+    needs: [ link-check, build ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
