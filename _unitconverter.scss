@@ -1,6 +1,6 @@
 // ____________________________________________________________________________
 //
-//    Sass Unit Converter v.2.4.1
+//    Sass Unit Converter v.2.4.2
 //    npm install sass-unitconverter
 //    Based on https://github.com/jakob-e/unitconversion
 // ____________________________________________________________________________
@@ -214,7 +214,8 @@ $base-font-size: $root-font-size !default;
   @if index(vw vh vmin vmax, $unit) and not index(num number, unit($input)) {
     $break: num(get-break($unit, $width, $height));
     $input: num(px($input, $width, $height));
-    $input: ($input / $break) * 100;
+    $input: if($break == 0, 0,
+               ($input / $break) * 100);
   }
 
   // EM convertion using px as base
