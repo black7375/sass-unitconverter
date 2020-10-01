@@ -89,6 +89,7 @@ $root-font-size: 16px            !default;
 $base-font-size: $root-font-size !default;
 $unit-width:     1200px          !default;
 $unit-height:    800px           !default;
+$check-callback: null            !default;
 
 @function n-units($number) {
   @return (
@@ -132,6 +133,7 @@ $unit-height:    800px           !default;
     base-size:  $base-font-size,
     width:      $unit-width,
     height:     $unit-height,
+    callback:   $check-callback,
   );
   @return $global-options;
 }
@@ -151,6 +153,7 @@ $unit-options-map: (
   height:      height,
   height-size: height,
   size-height: height,
+  callback:    callback,
 ) !default;
 
 // Get Global Named Scoped Option
@@ -277,6 +280,12 @@ $unit-options-map: (
   $base-size: unit-get-option($options, base-size);
   $width:     unit-get-option($options, width);
   $height:    unit-get-option($options, height);
+  $callback:  unit-get-option($options, callback);
+
+  // Check if convertable
+  @if (not is-null($callback)) and (not call($callback, $options)) {
+    @return $input;
+  }
 
   // Test against valid CSS units
   $units: n-units(0);
