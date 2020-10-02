@@ -81,6 +81,14 @@
 //   is-length(input);
 //   is-number(input, strict);
 //
+//   Options
+//   root-size:                  px, pt, pc, mm, cm, in, em, rem
+//   base-size:                  px, pt, pc, mm, cm, in, em, rem
+//   unit-width:                 px, pt, pc, mm, cm, in, em, rem
+//   unit-height:                px, pt, pc, mm, cm, in, em, rem
+//   check-callback:             Function Name of
+//                               Options => Boolean
+//
 // ____________________________________________________________________________
 
 // == Base =====================================================================
