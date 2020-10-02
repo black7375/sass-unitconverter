@@ -1,48 +1,48 @@
 // ____________________________________________________________________________
 //
-//    Sass Unit Converter v.2.4.2
+//    Sass Unit Converter v.2.5.0
 //    npm install sass-unitconverter
 //    Based on https://github.com/jakob-e/unitconversion
 // ____________________________________________________________________________
 //
-//   Function                    Input units
+//   Function               Input units
 //
 //   Absolute length
-//   px(input, width, height);   px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
-//   pt(input, width, height);   px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
-//   pc(input, width, height);   px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
-//   mm(input, width, height);   px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
-//   cm(input, width, height);   px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
-//   in(input, width, height);   px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   px(input, options);    px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   pt(input, options);    px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   pc(input, options);    px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   mm(input, options);    px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   cm(input, options);    px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   in(input, options);    px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
 //
 //   Relative length
-//   em(input, width, height);   px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
-//   rem(input, width, height);  px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
-//   ex(input);                  ex, number
-//   ch(input);                  ch, number
-//   vw(input, width, height);   px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
-//   vh(input, width, height);   px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
-//   vmin(input, width, height); px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
-//   vmax(input, width, height); px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   em(input,  options);   px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   rem(input, options);   px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   ex(input, options);    ex, number
+//   ch(input, options);    ch, number
+//   vw(input, options);    px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   vh(input, options);    px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   vmin(input, options);  px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   vmax(input, options);  px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
 //
 //   Angle
-//   deg(input);                 deg, rad, grad, turn, number
-//   rad(input);                 deg, rad, grad, turn, number
-//   grad(input);                deg, rad, grad, turn, number
-//   turn(input);                deg, rad, grad, turn, number
+//   deg(input, options);   deg, rad, grad, turn, number
+//   rad(input, options);   deg, rad, grad, turn, number
+//   grad(input, options);  deg, rad, grad, turn, number
+//   turn(input, options);  deg, rad, grad, turn, number
 //
 //   Time
-//   s(input);                   s, ms, number
-//   ms(input);                  s, ms, number
+//   s(input, options);     s, ms, number
+//   ms(input, options);    s, ms, number
 //
 //   Frequency
-//   hz(input);                  hz, khz, number
-//   khz(input);                 hz, khz, number
+//   hz(input, options);    hz, khz, number
+//   khz(input, options);   hz, khz, number
 //
 //   Resolution
-//   dpi(input);                 dpi, dpcm, dppx, number
-//   dpcm(input);                dpi, dpcm, dppx, number
-//   dppx(input);                dpi, dpcm, dppx, number
+//   dpi(input, options);   dpi, dpcm, dppx, number
+//   dpcm(input, options);  dpi, dpcm, dppx, number
+//   dppx(input, options);  dpi, dpcm, dppx, number
 //
 //   String
 //   str(input);                 anything not null
@@ -80,6 +80,14 @@
 //   is-string(input);
 //   is-length(input);
 //   is-number(input, strict);
+//
+//   Options
+//   root-size:                  px, pt, pc, mm, cm, in, em, rem
+//   base-size:                  px, pt, pc, mm, cm, in, em, rem
+//   unit-width:                 px, pt, pc, mm, cm, in, em, rem
+//   unit-height:                px, pt, pc, mm, cm, in, em, rem
+//   check-callback:             Function Name of
+//                               Options => Boolean
 //
 // ____________________________________________________________________________
 
