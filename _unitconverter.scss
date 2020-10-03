@@ -8,70 +8,70 @@
 //   Function               Input units
 //
 //   Absolute length
-//   px(input, options);    px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
-//   pt(input, options);    px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
-//   pc(input, options);    px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
-//   mm(input, options);    px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
-//   cm(input, options);    px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
-//   in(input, options);    px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   px(input, options);        px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   pt(input, options);        px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   pc(input, options);        px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   mm(input, options);        px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   cm(input, options);        px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   in(input, options);        px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
 //
 //   Relative length
-//   em(input,  options);   px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
-//   rem(input, options);   px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
-//   ex(input, options);    ex, number
-//   ch(input, options);    ch, number
-//   vw(input, options);    px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
-//   vh(input, options);    px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
-//   vmin(input, options);  px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
-//   vmax(input, options);  px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   em(input,  options);       px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   rem(input, options);       px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   ex(input, options);        ex, number
+//   ch(input, options);        ch, number
+//   vw(input, options);        px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   vh(input, options);        px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   vmin(input, options);      px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
+//   vmax(input, options);      px, pt, pc, mm, cm, in, em, rem, vw, vh, vmin, vmax, number
 //
 //   Angle
-//   deg(input, options);   deg, rad, grad, turn, number
-//   rad(input, options);   deg, rad, grad, turn, number
-//   grad(input, options);  deg, rad, grad, turn, number
-//   turn(input, options);  deg, rad, grad, turn, number
+//   deg(input, options);       deg, rad, grad, turn, number
+//   rad(input, options);       deg, rad, grad, turn, number
+//   grad(input, options);      deg, rad, grad, turn, number
+//   turn(input, options);      deg, rad, grad, turn, number
 //
 //   Time
-//   s(input, options);     s, ms, number
-//   ms(input, options);    s, ms, number
+//   s(input, options);         s, ms, number
+//   ms(input, options);        s, ms, number
 //
 //   Frequency
-//   hz(input, options);    hz, khz, number
-//   khz(input, options);   hz, khz, number
+//   hz(input, options);        hz, khz, number
+//   khz(input, options);       hz, khz, number
 //
 //   Resolution
-//   dpi(input, options);   dpi, dpcm, dppx, number
-//   dpcm(input, options);  dpi, dpcm, dppx, number
-//   dppx(input, options);  dpi, dpcm, dppx, number
+//   dpi(input, options);       dpi, dpcm, dppx, number
+//   dpcm(input, options);      dpi, dpcm, dppx, number
+//   dppx(input, options);      dpi, dpcm, dppx, number
 //
 //   String
-//   str(input);                 anything not null
+//   str(input);                anything not null
 //
 //   Number, int and uint
-//   num(input);                 px, pt, pc, mm, cm, in, em, rem, ex, ch,
-//                               vw, vh, vmin, vmax, deg, rad, grad, turn,
-//                               dpi, dpcm, dppx, s, ms, hz, khz, number, string
-//   int(input);                 as number
-//   uint(input);                as number
+//   num(input);                px, pt, pc, mm, cm, in, em, rem, ex, ch,
+//                              vw, vh, vmin, vmax, deg, rad, grad, turn,
+//                              dpi, dpcm, dppx, s, ms, hz, khz, number, string
+//   int(input);                as number
+//   uint(input);               as number
 //
-//   ratio                       number to fraction
+//   ratio                      number to fraction
 //
 //   ETC Convert
-//   one-unit(input);            px, pt, pc, mm, cm, in, em, rem, ex, ch,
-//                               vw, vh, vmin, vmax, deg, rad, grad, turn,
-//                               dpi, dpcm, dppx, s, ms, hz, khz, number
-//   to-unit(input, unit);       same
-//   to-unit-list(list, unit);   same as list
-//   to-unit-map(map, unit);     same as map
+//   one-unit(input);           px, pt, pc, mm, cm, in, em, rem, ex, ch,
+//                              vw, vh, vmin, vmax, deg, rad, grad, turn,
+//                              dpi, dpcm, dppx, s, ms, hz, khz, number
+//   to-unit(input, unit);      same
+//   to-unit-list(list, unit);  same as list
+//   to-unit-map(map, unit);    same as map
 //
-//   is-[unit](input)            each unit
-//   is-num(input, strict)       strict: true(default) => pure number
-//                                       false         => type-is number
-//   is-null(input, strict)      strict: true(default) => pure null
-//                                       false         => null, length is 0(list, map, string)
-//   is-exist(input, strict)     strict: true(default) => pure exist
-//                                       false         => exist, not false
-//   is-equal(inputA, inputB)    anything
+//   is-[unit](input)           each unit
+//   is-num(input, strict)      strict: true(default) => pure number
+//                                      false         => type-is number
+//   is-null(input, strict)     strict: true(default) => pure null
+//                                      false         => null, length is 0(list, map, string)
+//   is-exist(input, strict)    strict: true(default) => pure exist
+//                                      false         => exist, not false
+//   is-equal(inputA, inputB)   anything
 //
 //   Aliases
 //   string(input);
@@ -82,12 +82,12 @@
 //   is-number(input, strict);
 //
 //   Options
-//   root-size:                  px, pt, pc, mm, cm, in, em, rem
-//   base-size:                  px, pt, pc, mm, cm, in, em, rem
-//   unit-width:                 px, pt, pc, mm, cm, in, em, rem
-//   unit-height:                px, pt, pc, mm, cm, in, em, rem
-//   check-callback:             Function Name of
-//                               Options => Boolean
+//   root-size:                 px, pt, pc, mm, cm, in, em, rem
+//   base-size:                 px, pt, pc, mm, cm, in, em, rem
+//   unit-width:                px, pt, pc, mm, cm, in, em, rem
+//   unit-height:               px, pt, pc, mm, cm, in, em, rem
+//   check-callback:            Function Name of
+//                              Options => Boolean
 //
 // ____________________________________________________________________________
 
@@ -263,9 +263,9 @@ $unit-options-map: (
 }
 
 // Get break
-@function get-break($unit, $width, $height) {
-  $width:  if(is-null($width),  null, px($width, $width,  $height));
-  $height: if(is-null($height), null, px($height, $width, $height));
+@function get-break($unit, $width, $height, $options) {
+  $width:  if(is-null($width),  null, px($width, $options));
+  $height: if(is-null($height), null, px($height, $options));
 
   @if $unit == vw {
     @return $width;
@@ -313,16 +313,16 @@ $unit-options-map: (
 
   // $input is VW, VH, VMIN, VMAX using px as base
   @if index(vw vh vmin vmax, unit($input)) {
-    $break: get-break(unit($input), $width, $height);
+    $break: get-break(unit($input), $width, $height, $options);
     $input: ($break * num($input)) / 100;
   }
 
   // $unit is VW, VH, VMIN, VNAX using px as base
   @if index(vw vh vmin vmax, $unit) and not index(num number, unit($input)) {
-    $break: num(get-break($unit, $width, $height));
-    $input: num(px($input, $width, $height));
+    $break: num(get-break($unit, $width, $height, $options));
+    $input: num(px($input, $options));
     $input: if($break == 0, 0,
-               ($input / $break) * 100);
+    ($input / $break) * 100);
   }
 
   // EM convertion using px as base
