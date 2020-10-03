@@ -87,7 +87,7 @@
 //   unit-width:                px, pt, pc, mm, cm, in, em, rem
 //   unit-height:               px, pt, pc, mm, cm, in, em, rem
 //   check-callback:            Function Name of
-//                              Options => Boolean
+//                              (input, unit, Options) => Boolean
 //
 // ____________________________________________________________________________
 
@@ -291,7 +291,8 @@ $unit-options-map: (
   $callback:  unit-get-option($options, callback);
 
   // Check if convertable
-  @if (not is-null($callback)) and (not call($callback, $options)) {
+  $callback-args: ($input $unit $options);
+  @if (not is-null($callback)) and (not call($callback, $callback-args...)) {
     @return $input;
   }
 
