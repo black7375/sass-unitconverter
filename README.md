@@ -136,13 +136,13 @@ Cive it a try on:
 [Codepen](https://codepen.io/black7375/pen/JjXbaGW?editors=0100)(Try menu `View Compiled CSS`)
 
 **Options**
-| API       | Description                     | Default | Types                                          | Global Variable | Scoped Key                           |
-|-----------|---------------------------------|---------|------------------------------------------------|-----------------|--------------------------------------|
-| root-size | rem based size                  | 16px    | px, pt, pc, mm, cm, in, em, rem                | $root-font-size | root<br>root-size<br>size-root       |
-| base-size | em based size                   | 16px    | px, pt, pc, mm, cm, in, em, rem                | $base-font-size | base<br>base-size<br>size-base       |
-| width     | screen width                    | 1200px  | px, pt, pc, mm, cm, in, em, rem                | $unit-width     | width<br>width-size<br>size-width    |
-| height    | screen height                   | 800px   | px, pt, pc, mm, cm, in, em, rem                | $unit-height    | height<br>height-size<br>size-height |
-| callack   | check if conversion is possible | null    | `null`<br>Function `Options => Boolean`'s name | $check-callback | callback                             |
+| API       | Description                     | Default | Types                                                            | Global Variable | Scoped Key                           |
+|-----------|---------------------------------|---------|------------------------------------------------------------------|-----------------|--------------------------------------|
+| root-size | rem based size                  | 16px    | px, pt, pc, mm, cm, in, em, rem                                  | $root-font-size | root<br>root-size<br>size-root       |
+| base-size | em based size                   | 16px    | px, pt, pc, mm, cm, in, em, rem                                  | $base-font-size | base<br>base-size<br>size-base       |
+| width     | screen width                    | 1200px  | px, pt, pc, mm, cm, in, em, rem                                  | $unit-width     | width<br>width-size<br>size-width    |
+| height    | screen height                   | 800px   | px, pt, pc, mm, cm, in, em, rem                                  | $unit-height    | height<br>height-size<br>size-height |
+| callack   | check if conversion is possible | null    | `null`<br>Function `($input, $unit, $options) => Boolean`'s name | $check-callback | callback                             |
 
 
 <hr>
