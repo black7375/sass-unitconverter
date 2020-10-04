@@ -193,6 +193,13 @@ $unit-options-map: (
   @return $result;
 }
 
+// Get Option Single Value
+@function unit-get-option-value($scoped, $name) {
+  @return if(map-has-key($scoped, $name),
+  map-get($scoped, $name),
+  map-get(unit-global-options(), $name));
+}
+
 // Get Option Value
 @function unit-get-option($options: (), $name: all) {
   $scoped: unit-scoped-convert($options);
@@ -206,13 +213,12 @@ $unit-options-map: (
 
     @if is-list($name) {
       @each $option in $name {
-        $value:  map-get($scoped, $option);
-        $result: append($result, if(is-null($value), map-get(unit-global-options(), $option), $value));
+        $value:  unit-get-option-value($scoped, $option);
+        $result: append($result, $value);
       }
     }
     @else {
-      $value:  map-get($scoped, $name);
-      $result: if(is-null($value), map-get(unit-global-options(), $name), $value);
+      $result: unit-get-option-value($scoped, $name);
     }
   }
   @return $result;
